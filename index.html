@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HOI4 Guides</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      background-color: #000000;
+      color: #a8a8b0;
+      font-family: 'Lora', Georgia, serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+    h1 { color: #ffffff; font-size: 2.2em; font-weight: 600; margin-bottom: 8px; }
+    h2 { color: #e0e0e8; font-size: 1.5em; border-bottom: 1px solid #111115; padding-bottom: 10px; }
+    .highlight { color: #9b59f7; font-weight: 600; }
+    
+    #country-selector {
+      max-width: 1100px;
+      width: 100%;
+      padding: 60px 40px;
+      text-align: left;
+    }
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 40px;
+    }
+    .country-card {
+      background: #080808;
+      border: 1px solid #1a1a1f;
+      padding: 24px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: left;
+      width: 320px;
+      height: 160px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .country-card:hover {
+      border-color: #9b59f7;
+      background: #0c0015;
+      transform: translateY(-2px);
+    }
+    .country-card.disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+      filter: grayscale(1);
+    }
+    .country-card h3 { 
+      color: #ffffff; 
+      margin: 0; 
+      font-family: 'JetBrains Mono', monospace; 
+      font-size: 1.2em;
+    }
+    .country-card p {
+      font-size: 0.85em;
+      margin: 8px 0;
+      color: #666;
+      line-height: 1.4;
+      flex-grow: 1;
+    }
+
+    #guide-interface {
+      display: none;
+      width: 100%;
+      max-width: 1100px;
+      padding: 60px 40px;
+    }
+
+    .top-nav-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 30px 0;
+      gap: 20px;
+    }
+
+    .info-badge {
+      background: #0c0015;
+      border: 1px solid #9b59f7;
+      color: #9b59f7;
+      padding: 8px 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85em;
+      border-radius: 4px;
+    }
+
+    /* Mini Tabs Styling */
+    .mini-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .mini-tab {
+      background: #0a0a0a;
+      border: 1px solid #1a1a1f;
+      color: #555;
+      padding: 6px 12px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7em;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.2s ease;
+    }
+    .mini-tab:hover {
+      border-color: #444;
+      color: #888;
+    }
+    .mini-tab.active {
+      background: #110022;
+      border-color: #9b59f7;
+      color: #9b59f7;
+    }
+
+    .screenshot-trigger {
+      background: #080808;
+      border: 1px solid #1a1a1f;
+      color: #a8a8b0;
+      padding: 8px 24px;
+      font-family: 'JetBrains Mono', monospace;
+      cursor: pointer;
+      font-size: 0.9em;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .screenshot-trigger:hover, .screenshot-trigger.active {
+      background: #0c0015;
+      border-color: #9b59f7;
+      color: #9b59f7;
+    }
+
+    .guide-container {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      gap: 40px;
+      border-top: 1px solid #1a1a1a;
+      padding-top: 40px;
+    }
+    .sidebar-dots {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .tab-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+    .tab-dot {
+      width: 10px;
+      height: 10px;
+      background: #1a1a1f;
+      border: 1px solid #222228;
+      border-radius: 2px;
+      transition: all 0.2s ease;
+    }
+    .tab-item.active .tab-dot, .tab-item:hover .tab-dot {
+      background: #9b59f7;
+      border-color: #9b59f7;
+    }
+    .tab-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75em;
+      text-transform: uppercase;
+      color: #444450;
+    }
+    .tab-item.active .tab-label { color: #9b59f7; }
+
+    .content-box {
+      background: #050505;
+      border: 1px solid #111115;
+      padding: 40px;
+      min-height: 550px;
+    }
+    .meta-value {
+      font-family: 'JetBrains Mono', monospace;
+      background: #0a0a0a;
+      padding: 24px;
+      border-left: 2px solid #9b59f7;
+      margin: 24px 0;
+      color: #b0b0bc;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      font-size: 0.95em;
+    }
+
+    .library-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 300px;
+      border: 1px dashed #1a1a1f;
+      text-align: center;
+    }
+    .library-placeholder p {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8em;
+      color: #444;
+      margin-top: 15px;
+    }
+
+    #back-btn {
+      background: transparent;
+      border: 1px solid #1a1a1f;
+      color: #444450;
+      padding: 6px 14px;
+      cursor: pointer;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8em;
+      margin-bottom: 20px;
+    }
+    #back-btn:hover { color: #9b59f7; border-color: #9b59f7; }
+
+    @media (max-width: 768px) {
+      .top-nav-row { flex-direction: column; align-items: flex-start; }
+      .guide-container { grid-template-columns: 1fr; }
+      .sidebar-dots { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <section id="country-selector">
+    <header>
+      <h1>HOI4 Guides</h1>
+      <p style="color: #444450; font-family: 'JetBrains Mono', monospace; font-size: 0.85em; margin-top: 10px;">Select a nation for meta strategies</p>
+    </header>
+
+    <div class="grid">
+      <div class="country-card" onclick="openGuide('USSR')">
+        <div>
+          <h3>USSR</h3>
+          <p>Guide for Union of Soviet Socialist Republics</p>
+        </div>
+        <span class="highlight" style="font-size: 0.7em; font-family: 'JetBrains Mono', monospace;">OPEN GUIDE</span>
+      </div>
+
+      <div class="country-card disabled">
+        <div>
+          <h3>GERMANY</h3>
+          <p>Guide for German Reich</p>
+        </div>
+        <span style="font-size: 0.7em; font-family: 'JetBrains Mono', monospace; color: #444;">COMING SOON</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="guide-interface">
+    <button id="back-btn" onclick="closeGuide()">&larr; Back to Selection</button>
+    <h1 id="active-country-name">USSR</h1>
+    <p style="color: #444450; font-family: 'JetBrains Mono', monospace; font-size: 0.78em; margin: -4px 0 0;">Union of Soviet Socialist Republics</p>
+    
+    <div class="top-nav-row">
+      <div class="info-badge">
+        STRATEGY UNTIL: 01. JAN 1941
+      </div>
+
+      <button id="screenshot-btn" class="screenshot-trigger" onclick="toggleLibrary()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+        SCREENSHOTS
+      </button>
+    </div>
+
+    <div class="guide-container">
+      <!-- Sidebar Desktop -->
+      <div id="standard-sidebar" class="sidebar-dots">
+        <div class="tab-item active" data-id="Focuses" onclick="setTab('Focuses')">
+          <div class="tab-dot"></div><span class="tab-label">Focus Tree</span>
+        </div>
+        <div class="tab-item" data-id="Research" onclick="setTab('Research')">
+          <div class="tab-dot"></div><span class="tab-label">Research</span>
+        </div>
+        <div class="tab-item" data-id="Production" onclick="setTab('Production')">
+          <div class="tab-dot"></div><span class="tab-label">Production</span>
+        </div>
+        <div class="tab-item" data-id="PP Picks" onclick="setTab('PP Picks')">
+          <div class="tab-dot"></div><span class="tab-label">PP Picks</span>
+        </div>
+        <div class="tab-item" data-id="MIOs" onclick="setTab('MIOs')">
+          <div class="tab-dot"></div><span class="tab-label">MIOs</span>
+        </div>
+        <div class="tab-item" data-id="Spies" onclick="setTab('Spies')">
+          <div class="tab-dot"></div><span class="tab-label">Spies</span>
+        </div>
+        <div class="tab-item" data-id="General" onclick="setTab('General')">
+          <div class="tab-dot"></div><span class="tab-label">General</span>
+        </div>
+      </div>
+
+      <div class="content-box">
+        <!-- Mini Tabs for easy mobile access or quick switching -->
+        <div class="mini-tabs">
+          <div class="mini-tab active" data-id="Focuses" onclick="setTab('Focuses')">Focus</div>
+          <div class="mini-tab" data-id="Research" onclick="setTab('Research')">Research</div>
+          <div class="mini-tab" data-id="Production" onclick="setTab('Production')">Prod</div>
+          <div class="mini-tab" data-id="PP Picks" onclick="setTab('PP Picks')">PP</div>
+          <div class="mini-tab" data-id="MIOs" onclick="setTab('MIOs')">MIO</div>
+          <div class="mini-tab" data-id="Spies" onclick="setTab('Spies')">Spies</div>
+          <div class="mini-tab" data-id="General" onclick="setTab('General')">General</div>
+        </div>
+
+        <h2 id="content-title">Focus Tree <span class="highlight">// Chronological</span></h2>
+        <div id="content-body">
+          <div id="meta-display" class="meta-value"></div>
+          <div id="library-display" class="library-placeholder" style="display: none;">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#1a1a1f" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+            <p>SCREENSHOT LIBRARY IS EMPTY<br><span style="color: #222; font-size: 0.9em;">No reference images available for this section yet.</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    let currentCountry = "";
+    let currentTab = "Focuses";
+    let isLibraryOpen = false;
+
+    const database = {
+      "USSR": {
+        "Focuses": `1. The Path of Marxism and Leninism
+2. The Centre
+3. The Stalin Constitution
+4. The Zinovyevite Terrorist Center
+5. Heavy Industry
+6. Addressing Internal Affairs
+7. Infrastructure Effort
+8. The Comintern
+9. The Anti-Soviet Trotskyist Center
+10. Expand the Agitprop
+11. NKVD Primacy
+12. The Workers Dictatorship
+13. Found the PCDI
+14. The Military Conspiracy
+15. Finish the Five Year Plan
+16. Foreign Experts
+17. Behead the Snake
+18. Eastern Development
+19. Behead the Snake (Second Stage)
+20. The Bloc of Rights and Trotskyites
+21. Develop the Urals
+22. The USSR Academy of Sciences
+23. Baltic Security
+24. Claims in the Baltics
+25. PC of Mechanical Engineering
+26. The Means to Wage War
+27. Development of Tankograd
+28. Merge Tank and Material Plants
+29. Third Five Year Plan
+30. Reorganize the PC of Heavy Industry
+31. Superior War Machines
+32. Soviet Artillery
+33. Claim on Bessarabia
+34. Positive Heroism
+35. Strengthen the Mobilization Plan
+36. Cohesion First
+37. Rehabilitated Military
+38. Military Reorganization`,
+
+        "Research": `1.  Electronic Mechanical Engineering
+2.  Construction 1
+3.  [Tip] Wait 30 days, swap Engineering for Machine Tools, then re-add Engineering to unlock it 30 days earlier
+4.  Mechanical Computing
+5.  Concentrated Industry 1
+6.  Construction 2
+7.  Concentrated Industry 2
+8.  1934 Heavy Tank  [use Mytishchy Machine Building]
+9.  Anti-Tank 1  [use MIO]
+10. Radio 1
+11. Field Hospital 1  [use Mytishchy Machine Building]
+12. Logistics Company 1  [use Mytishchy Machine Building]
+13. Basic Armor Protection  [use Mytishchy Machine Building]
+14. Armored Trains  [use MIO]
+15. Anti-Tank Upgrade
+16. Improved Armor Protection  [use Mytishchy Machine Building]
+17. Advanced Machine Tools
+18. Concentrated Industry 3
+19. Construction 3
+20. Signal Company 1  [use MIO]
+21. Anti-Tank 2  [license it if possible for a 20% research bonus]
+22. Mechanized  [use MIO]
+23. Improved Infantry 1  [use MIO]
+24. Radio 2
+25. Rifle Upgrade  [use MIO]
+26. 1938 Basic Medium Tank
+27. Improved Anti-Tank Upgrade 1  [use Mytishchy Machine Building]
+28. First Weapons Upgrade  [use MIO]
+29. Assembly Line Production
+30. Concentrated Industry 4
+31. Engineer Company 2  [use MIO]
+32. Logistics Company 2  [use Mytishchy Machine Building]
+33. Signal Company 2  [use MIO]
+34. Field Hospital 2  [use Mytishchy Machine Building]
+35. Computing Machine  [use MIO]
+36. Streamlined Line
+37. Construction 4
+38. Weapons Upgrade 2  [use MIO]
+39. Improved Anti-Tank Upgrade 2  [use MIO]
+40. Advanced Anti-Tank  [use MIO]
+41. Weapons Upgrade 3  [use MIO]
+42. Improved Infantry 2  [use MIO]`,
+
+        "Production": `AT GAME START:
+- 12 factories on Guns
+- 9 factories on Support Equipment
+- 1 factory on Improved Light Tank
+- 2 factories on Trucks
+- 9 factories on Anti-Air
+- Delete all remaining lines, finish building ships, then start producing Convoys
+
+~SEPTEMBER 15, 1937:
+- Switch to: 7 Heavy Tanks + 5 Infantry Equipment
+
+~END OF DECEMBER 1937:
+- 20 factories on Infantry Equipment, 50 on Heavy Tanks (prioritize Infantry over Tanks)
+- Once Armored Trains is researched: add 1 factory and move it to the top
+
+MID-1938:
+- Add 1 factory on Inter-War Medium Tanks (convert later to Flame Tanks — see screenshots for the correct design)
+- If you have surplus factories: increase Heavy Tanks to 100 factories
+- Once Mechanized Equipment is researched: add 25 factories and prioritize it
+
+NOTES:
+- Create and upgrade tank templates as shown in the named screenshots`,
+
+        "PP Picks": `1.  Improved Workers Conditions
+2.  Attache to Spain
+3.  War Economy
+4.  Captain of Industry
+5.  Popular Figurehead
+6.  Army Reformer
+7.  "We Will Accomplish a High Yield"  (repeat this pick continuously)
+8.  Attache to China  (~November 1937)
+9.  Construction Company
+10. Bring American Experts
+11. Specialization in Military Industry
+12. All Baltic Annexation Buttons
+13. Land Warfare Scientist
+14. Military Theorist
+15. Limited Exports
+16. Extensive Conscription
+17. Concealment Expert`,
+
+        "MIOs": `SETUP:
+- Assign the Mytishchy Machine Building MIO to the Support Equipment production line
+- Follow the trait order shown in the screenshots
+
+SWITCHING MIOs:
+- Once the MIO reaches Level 7, switch it away from the Light Tank and Heavy Tank lines
+- Reassign the Mytishchy Machine Building MIO to those lines`,
+
+        "Spies": `AGENCY UPGRADES (in order):
+1. Suicide Pills  (January 31)
+2. Upgrade Passive Defense to Level 4 immediately  (or wait until ~May 1)
+3. Invisible Inc.
+4. Interrogation Techniques
+
+OPERATIONS:
+1. Send your first spy to one of the Baltic nations
+   - Goal: establish 1 Collaboration Government in each Baltic nation
+   - Wait until the spy network reaches 50%, then switch it to "Quiet Intel Network"
+   - Always use spies with German nationality
+
+2. Once you have 2 spies available, begin Collaboration Government operations in all Baltic nations, and later start 2 Collaboration Governments in Finland as well`,
+
+        "General": `1.  Create a Spy Agency immediately at game start
+2.  Sell all aircraft on the market
+3.  Merge all troops into one army (no general) and distribute them across the mainland — do not concentrate east of Moscow
+4.  Merge the entire Navy at Leningrad — you will need it later
+5.  Match all production line MIOs to the ones shown in the screenshots
+6.  When the Spanish Civil War starts: send 3 Tank divisions + 3 Infantry divisions + an Attache (improve relations first if needed)
+7.  After sending volunteers to Spain, disband all NKVD divisions
+8.  Paranoia Events: do NOT lose key generals (e.g., Zhukov), the Captain of Industry advisor, or any construction bonuses
+9.  After completing the "Foreign Experts" focus: reduce Civilian Factory output to 1 and begin building Military Factories
+10. Once priority states reach 80%+ infrastructure, build up to 3 Military Factories in the Urals — a later focus rewards this
+11. You can skip the "Secure Leningrad" focus by manually justifying a war goal on Finland (recommended: start justification in early 1939)
+12. Complete and open a Land Warfare Research Facility by the start of 1939
+13. ~October 1939: Begin training 300+ basic Infantry divisions — use the template shown in the screenshots
+14. If you run low on Infantry Equipment, increase Military Factory allocation to 25-30`
+      }
+    };
+
+    function openGuide(country) {
+      currentCountry = country;
+      document.getElementById('active-country-name').innerText = country;
+      document.getElementById('country-selector').style.display = 'none';
+      document.getElementById('guide-interface').style.display = 'block';
+      currentTab = "Focuses";
+      document.querySelectorAll('.tab-item, .mini-tab').forEach(el => {
+        el.classList.toggle('active', el.getAttribute('data-id') === 'Focuses');
+      });
+      updateDisplay();
+    }
+
+    function closeGuide() {
+      document.getElementById('country-selector').style.display = 'block';
+      document.getElementById('guide-interface').style.display = 'none';
+    }
+
+    function toggleLibrary() {
+      isLibraryOpen = !isLibraryOpen;
+      const btn = document.getElementById('screenshot-btn');
+      btn.classList.toggle('active', isLibraryOpen);
+      updateDisplay();
+    }
+
+    function setTab(tab) {
+      currentTab = tab;
+      isLibraryOpen = false;
+      document.getElementById('screenshot-btn').classList.remove('active');
+      
+      document.querySelectorAll('.tab-item, .mini-tab').forEach(el => {
+        el.classList.toggle('active', el.getAttribute('data-id') === tab);
+      });
+      
+      updateDisplay();
+    }
+
+    function updateDisplay() {
+      const title = document.getElementById('content-title');
+      const metaBox = document.getElementById('meta-display');
+      const libraryBox = document.getElementById('library-display');
+      
+      const tabLabels = {
+        'Focuses': 'Focus Tree',
+        'Research': 'Research',
+        'Production': 'Production',
+        'PP Picks': 'Political Power',
+        'MIOs': 'MIOs',
+        'Spies': 'Espionage',
+        'General': 'General'
+      };
+
+      if (isLibraryOpen) {
+        title.innerHTML = `Library <span class="highlight">// ${tabLabels[currentTab]}</span>`;
+        metaBox.style.display = 'none';
+        libraryBox.style.display = 'flex';
+      } else {
+        title.innerHTML = `${tabLabels[currentTab]} <span class="highlight">// Chronological</span>`;
+        metaBox.style.display = 'block';
+        libraryBox.style.display = 'none';
+        
+        const content = database[currentCountry]?.[currentTab];
+        metaBox.innerText = content || "No data available for this section.";
+      }
+    }
+  </script>
+</body>
+</html>
