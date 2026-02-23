@@ -13,6 +13,7 @@
       background-color: #000000;
       color: #a8a8b0;
       font-family: 'Lora', Georgia, serif;
+      font-weight: 500;
       margin: 0;
       padding: 0;
       display: flex;
@@ -190,15 +191,45 @@
       min-height: 550px;
     }
     .meta-value {
-      font-family: 'JetBrains Mono', monospace;
+      font-family: 'Lora', Georgia, serif;
+      font-weight: 500;
       background: #0a0a0a;
       padding: 24px;
       border-left: 2px solid #9b59f7;
       margin: 24px 0;
       color: #b0b0bc;
-      line-height: 1.6;
-      white-space: pre-wrap;
+      line-height: 1.8;
       font-size: 0.95em;
+    }
+    .meta-value ol {
+      margin: 0;
+      padding-left: 2em;
+      list-style: decimal;
+    }
+    .meta-value ol li {
+      margin: 0;
+      padding: 1px 0;
+    }
+    .meta-value ul {
+      margin: 4px 0 10px 1em;
+      padding-left: 1em;
+      list-style: none;
+    }
+    .meta-value ul li::before {
+      content: "— ";
+      color: #9b59f7;
+    }
+    .meta-value .section-head {
+      color: #9b59f7;
+      font-size: 0.8em;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin: 16px 0 6px;
+      display: block;
+    }
+    .meta-value .tip {
+      color: #666;
+      font-style: italic;
     }
 
     .library-placeholder {
@@ -424,165 +455,187 @@
 
     const database = {
       "USSR": {
-        "Focuses": `1. The Path of Marxism and Leninism
-2. The Centre
-3. The Stalin Constitution
-4. The Zinovyevite Terrorist Center
-5. Heavy Industry
-6. Addressing Internal Affairs
-7. Infrastructure Effort
-8. The Comintern
-9. The Anti-Soviet Trotskyist Center
-10. Expand the Agitprop
-11. NKVD Primacy
-12. The Workers Dictatorship
-13. Found the PCDI
-14. The Military Conspiracy
-15. Finish the Five Year Plan
-16. Foreign Experts
-17. Behead the Snake
-18. Eastern Development
-19. Behead the Snake (Second Stage)
-20. The Bloc of Rights and Trotskyites
-21. Develop the Urals
-22. The USSR Academy of Sciences
-23. Baltic Security
-24. Claims in the Baltics
-25. PC of Mechanical Engineering
-26. The Means to Wage War
-27. Development of Tankograd
-28. Merge Tank and Material Plants
-29. Third Five Year Plan
-30. Reorganize the PC of Heavy Industry
-31. Superior War Machines
-32. Soviet Artillery
-33. Claim on Bessarabia
-34. Positive Heroism
-35. Strengthen the Mobilization Plan
-36. Cohesion First
-37. Rehabilitated Military
-38. Military Reorganization`,
+        "Focuses": `<ol>
+<li>The Path of Marxism and Leninism</li>
+<li>The Centre</li>
+<li>The Stalin Constitution</li>
+<li>The Zinovyevite Terrorist Center</li>
+<li>Heavy Industry</li>
+<li>Addressing Internal Affairs</li>
+<li>Infrastructure Effort</li>
+<li>The Comintern</li>
+<li>The Anti-Soviet Trotskyist Center</li>
+<li>Expand the Agitprop</li>
+<li>NKVD Primacy</li>
+<li>The Workers Dictatorship</li>
+<li>Found the PCDI</li>
+<li>The Military Conspiracy</li>
+<li>Finish the Five Year Plan</li>
+<li>Foreign Experts</li>
+<li>Behead the Snake</li>
+<li>Eastern Development</li>
+<li>Behead the Snake (Second Stage)</li>
+<li>The Bloc of Rights and Trotskyites</li>
+<li>Develop the Urals</li>
+<li>The USSR Academy of Sciences</li>
+<li>Baltic Security</li>
+<li>Claims in the Baltics</li>
+<li>PC of Mechanical Engineering</li>
+<li>The Means to Wage War</li>
+<li>Development of Tankograd</li>
+<li>Merge Tank and Material Plants</li>
+<li>Third Five Year Plan</li>
+<li>Reorganize the PC of Heavy Industry</li>
+<li>Superior War Machines</li>
+<li>Soviet Artillery</li>
+<li>Claim on Bessarabia</li>
+<li>Positive Heroism</li>
+<li>Strengthen the Mobilization Plan</li>
+<li>Cohesion First</li>
+<li>Rehabilitated Military</li>
+<li>Military Reorganization</li>
+</ol>`,
 
-        "Research": `1.  Electronic Mechanical Engineering
-2.  Construction 1
-3.  [Tip] Wait 30 days, swap Engineering for Machine Tools, then re-add Engineering to unlock it 30 days earlier
-4.  Mechanical Computing
-5.  Concentrated Industry 1
-6.  Construction 2
-7.  Concentrated Industry 2
-8.  1934 Heavy Tank  [use Mytishchy Machine Building]
-9.  Anti-Tank 1  [use MIO]
-10. Radio 1
-11. Field Hospital 1  [use Mytishchy Machine Building]
-12. Logistics Company 1  [use Mytishchy Machine Building]
-13. Basic Armor Protection  [use Mytishchy Machine Building]
-14. Armored Trains  [use MIO]
-15. Anti-Tank Upgrade
-16. Improved Armor Protection  [use Mytishchy Machine Building]
-17. Advanced Machine Tools
-18. Concentrated Industry 3
-19. Construction 3
-20. Signal Company 1  [use MIO]
-21. Anti-Tank 2  [license it if possible for a 20% research bonus]
-22. Mechanized  [use MIO]
-23. Improved Infantry 1  [use MIO]
-24. Radio 2
-25. Rifle Upgrade  [use MIO]
-26. 1938 Basic Medium Tank
-27. Improved Anti-Tank Upgrade 1  [use Mytishchy Machine Building]
-28. First Weapons Upgrade  [use MIO]
-29. Assembly Line Production
-30. Concentrated Industry 4
-31. Engineer Company 2  [use MIO]
-32. Logistics Company 2  [use Mytishchy Machine Building]
-33. Signal Company 2  [use MIO]
-34. Field Hospital 2  [use Mytishchy Machine Building]
-35. Computing Machine  [use MIO]
-36. Streamlined Line
-37. Construction 4
-38. Weapons Upgrade 2  [use MIO]
-39. Improved Anti-Tank Upgrade 2  [use MIO]
-40. Advanced Anti-Tank  [use MIO]
-41. Weapons Upgrade 3  [use MIO]
-42. Improved Infantry 2  [use MIO]`,
+        "Research": `<ol>
+<li>Electronic Mechanical Engineering</li>
+<li>Construction 1</li>
+<li><span class="tip">[Tip] Wait 30 days, swap Engineering for Machine Tools, then re-add Engineering to unlock it 30 days earlier</span></li>
+<li>Mechanical Computing</li>
+<li>Concentrated Industry 1</li>
+<li>Construction 2</li>
+<li>Concentrated Industry 2</li>
+<li>1934 Heavy Tank <span class="tip">[use Mytishchy Machine Building]</span></li>
+<li>Anti-Tank 1 <span class="tip">[use MIO]</span></li>
+<li>Radio 1</li>
+<li>Field Hospital 1 <span class="tip">[use Mytishchy Machine Building]</span></li>
+<li>Logistics Company 1 <span class="tip">[use Mytishchy Machine Building]</span></li>
+<li>Basic Armor Protection <span class="tip">[use Mytishchy Machine Building]</span></li>
+<li>Armored Trains <span class="tip">[use MIO]</span></li>
+<li>Anti-Tank Upgrade</li>
+<li>Improved Armor Protection <span class="tip">[use Mytishchy Machine Building]</span></li>
+<li>Advanced Machine Tools</li>
+<li>Concentrated Industry 3</li>
+<li>Construction 3</li>
+<li>Signal Company 1 <span class="tip">[use MIO]</span></li>
+<li>Anti-Tank 2 <span class="tip">[license it if possible for a 20% research bonus]</span></li>
+<li>Mechanized <span class="tip">[use MIO]</span></li>
+<li>Improved Infantry 1 <span class="tip">[use MIO]</span></li>
+<li>Radio 2</li>
+<li>Rifle Upgrade <span class="tip">[use MIO]</span></li>
+<li>1938 Basic Medium Tank</li>
+<li>Improved Anti-Tank Upgrade 1 <span class="tip">[use Mytishchy Machine Building]</span></li>
+<li>First Weapons Upgrade <span class="tip">[use MIO]</span></li>
+<li>Assembly Line Production</li>
+<li>Concentrated Industry 4</li>
+<li>Engineer Company 2 <span class="tip">[use MIO]</span></li>
+<li>Logistics Company 2 <span class="tip">[use Mytishchy Machine Building]</span></li>
+<li>Signal Company 2 <span class="tip">[use MIO]</span></li>
+<li>Field Hospital 2 <span class="tip">[use Mytishchy Machine Building]</span></li>
+<li>Computing Machine <span class="tip">[use MIO]</span></li>
+<li>Streamlined Line</li>
+<li>Construction 4</li>
+<li>Weapons Upgrade 2 <span class="tip">[use MIO]</span></li>
+<li>Improved Anti-Tank Upgrade 2 <span class="tip">[use MIO]</span></li>
+<li>Advanced Anti-Tank <span class="tip">[use MIO]</span></li>
+<li>Weapons Upgrade 3 <span class="tip">[use MIO]</span></li>
+<li>Improved Infantry 2 <span class="tip">[use MIO]</span></li>
+</ol>`,
 
-        "Production": `AT GAME START:
-- 12 factories on Guns
-- 9 factories on Support Equipment
-- 1 factory on Improved Light Tank
-- 2 factories on Trucks
-- 9 factories on Anti-Air
-- Delete all remaining lines, finish building ships, then start producing Convoys
+        "Production": `<span class="section-head">At Game Start</span>
+<ul>
+<li>12 factories on Guns</li>
+<li>9 factories on Support Equipment</li>
+<li>1 factory on Improved Light Tank</li>
+<li>2 factories on Trucks</li>
+<li>9 factories on Anti-Air</li>
+<li>Delete all remaining lines, finish building ships, then start producing Convoys</li>
+</ul>
+<span class="section-head">~September 15, 1937</span>
+<ul>
+<li>Switch to: 7 Heavy Tanks + 5 Infantry Equipment</li>
+</ul>
+<span class="section-head">~End of December 1937</span>
+<ul>
+<li>20 factories on Infantry Equipment, 50 on Heavy Tanks (prioritize Infantry over Tanks)</li>
+<li>Once Armored Trains is researched: add 1 factory and move it to the top</li>
+</ul>
+<span class="section-head">Mid-1938</span>
+<ul>
+<li>Add 1 factory on Inter-War Medium Tanks (convert later to Flame Tanks — see screenshots for the correct design)</li>
+<li>If you have surplus factories: increase Heavy Tanks to 100 factories</li>
+<li>Once Mechanized Equipment is researched: add 25 factories and prioritize it</li>
+</ul>
+<span class="section-head">Notes</span>
+<ul>
+<li>Create and upgrade tank templates as shown in the named screenshots</li>
+</ul>`,
 
-~SEPTEMBER 15, 1937:
-- Switch to: 7 Heavy Tanks + 5 Infantry Equipment
+        "PP Picks": `<ol>
+<li>Improved Workers Conditions</li>
+<li>Attache to Spain</li>
+<li>War Economy</li>
+<li>Captain of Industry</li>
+<li>Popular Figurehead</li>
+<li>Army Reformer</li>
+<li>"We Will Accomplish a High Yield" <span class="tip">(repeat this pick continuously)</span></li>
+<li>Attache to China <span class="tip">(~November 1937)</span></li>
+<li>Construction Company</li>
+<li>Bring American Experts</li>
+<li>Specialization in Military Industry</li>
+<li>All Baltic Annexation Buttons</li>
+<li>Land Warfare Scientist</li>
+<li>Military Theorist</li>
+<li>Limited Exports</li>
+<li>Extensive Conscription</li>
+<li>Concealment Expert</li>
+</ol>`,
 
-~END OF DECEMBER 1937:
-- 20 factories on Infantry Equipment, 50 on Heavy Tanks (prioritize Infantry over Tanks)
-- Once Armored Trains is researched: add 1 factory and move it to the top
+        "MIOs": `<span class="section-head">Setup</span>
+<ul>
+<li>Assign the Mytishchy Machine Building MIO to the Support Equipment production line</li>
+<li>Follow the trait order shown in the screenshots</li>
+</ul>
+<span class="section-head">Switching MIOs</span>
+<ul>
+<li>Once the MIO reaches Level 7, switch it away from the Light Tank and Heavy Tank lines</li>
+<li>Reassign the Mytishchy Machine Building MIO to those lines</li>
+</ul>`,
 
-MID-1938:
-- Add 1 factory on Inter-War Medium Tanks (convert later to Flame Tanks — see screenshots for the correct design)
-- If you have surplus factories: increase Heavy Tanks to 100 factories
-- Once Mechanized Equipment is researched: add 25 factories and prioritize it
+        "Spies": `<span class="section-head">Agency Upgrades (in order)</span>
+<ol>
+<li>Suicide Pills <span class="tip">(January 31)</span></li>
+<li>Upgrade Passive Defense to Level 4 immediately <span class="tip">(or wait until ~May 1)</span></li>
+<li>Invisible Inc.</li>
+<li>Interrogation Techniques</li>
+</ol>
+<span class="section-head">Operations</span>
+<ol>
+<li>Send your first spy to one of the Baltic nations
+<ul>
+<li>Goal: establish 1 Collaboration Government in each Baltic nation</li>
+<li>Wait until the spy network reaches 50%, then switch it to "Quiet Intel Network"</li>
+<li>Always use spies with German nationality</li>
+</ul>
+</li>
+<li>Once you have 2 spies available, begin Collaboration Government operations in all Baltic nations, and later start 2 Collaboration Governments in Finland as well</li>
+</ol>`,
 
-NOTES:
-- Create and upgrade tank templates as shown in the named screenshots`,
-
-        "PP Picks": `1.  Improved Workers Conditions
-2.  Attache to Spain
-3.  War Economy
-4.  Captain of Industry
-5.  Popular Figurehead
-6.  Army Reformer
-7.  "We Will Accomplish a High Yield"  (repeat this pick continuously)
-8.  Attache to China  (~November 1937)
-9.  Construction Company
-10. Bring American Experts
-11. Specialization in Military Industry
-12. All Baltic Annexation Buttons
-13. Land Warfare Scientist
-14. Military Theorist
-15. Limited Exports
-16. Extensive Conscription
-17. Concealment Expert`,
-
-        "MIOs": `SETUP:
-- Assign the Mytishchy Machine Building MIO to the Support Equipment production line
-- Follow the trait order shown in the screenshots
-
-SWITCHING MIOs:
-- Once the MIO reaches Level 7, switch it away from the Light Tank and Heavy Tank lines
-- Reassign the Mytishchy Machine Building MIO to those lines`,
-
-        "Spies": `AGENCY UPGRADES (in order):
-1. Suicide Pills  (January 31)
-2. Upgrade Passive Defense to Level 4 immediately  (or wait until ~May 1)
-3. Invisible Inc.
-4. Interrogation Techniques
-
-OPERATIONS:
-1. Send your first spy to one of the Baltic nations
-   - Goal: establish 1 Collaboration Government in each Baltic nation
-   - Wait until the spy network reaches 50%, then switch it to "Quiet Intel Network"
-   - Always use spies with German nationality
-
-2. Once you have 2 spies available, begin Collaboration Government operations in all Baltic nations, and later start 2 Collaboration Governments in Finland as well`,
-
-        "General": `1.  Create a Spy Agency immediately at game start
-2.  Sell all aircraft on the market
-3.  Merge all troops into one army (no general) and distribute them across the mainland — do not concentrate east of Moscow
-4.  Merge the entire Navy at Leningrad — you will need it later
-5.  Match all production line MIOs to the ones shown in the screenshots
-6.  When the Spanish Civil War starts: send 3 Tank divisions + 3 Infantry divisions + an Attache (improve relations first if needed)
-7.  After sending volunteers to Spain, disband all NKVD divisions
-8.  Paranoia Events: do NOT lose key generals (e.g., Zhukov), the Captain of Industry advisor, or any construction bonuses
-9.  After completing the "Foreign Experts" focus: reduce Civilian Factory output to 1 and begin building Military Factories
-10. Once priority states reach 80%+ infrastructure, build up to 3 Military Factories in the Urals — a later focus rewards this
-11. You can skip the "Secure Leningrad" focus by manually justifying a war goal on Finland (recommended: start justification in early 1939)
-12. Complete and open a Land Warfare Research Facility by the start of 1939
-13. ~October 1939: Begin training 300+ basic Infantry divisions — use the template shown in the screenshots
-14. If you run low on Infantry Equipment, increase Military Factory allocation to 25-30`
+        "General": `<ol>
+<li>Create a Spy Agency immediately at game start</li>
+<li>Sell all aircraft on the market</li>
+<li>Merge all troops into one army (no general) and distribute them across the mainland — do not concentrate east of Moscow</li>
+<li>Merge the entire Navy at Leningrad — you will need it later</li>
+<li>Match all production line MIOs to the ones shown in the screenshots</li>
+<li>When the Spanish Civil War starts: send 3 Tank divisions + 3 Infantry divisions + an Attache <span class="tip">(improve relations first if needed)</span></li>
+<li>After sending volunteers to Spain, disband all NKVD divisions</li>
+<li>Paranoia Events: do NOT lose key generals (e.g., Zhukov), the Captain of Industry advisor, or any construction bonuses</li>
+<li>After completing the "Foreign Experts" focus: reduce Civilian Factory construction to 1 and begin building Military Factories</li>
+<li>Once you build in the prioritized states of 80%+ infrastructure, build up to 3 Military Factories in the Urals on min 10 tiles — a later focus rewards this</li>
+<li>You can skip the "Secure Leningrad" focus by manually justifying a war goal on Finland <span class="tip">(recommended: start justification in early 1939)</span></li>
+<li>Complete building a Land Warfare Research Facility by the start of 1939</li>
+<li>~October 1939: Begin training 300+ basic Infantry divisions — use the template shown in the screenshots</li>
+<li>If you run low on Infantry Equipment, increase Military Factory allocation to 25–30</li>
+</ol>`
       }
     };
 
@@ -715,7 +768,7 @@ OPERATIONS:
         libraryBox.style.display = 'none';
         
         const content = database[currentCountry]?.[currentTab];
-        metaBox.innerText = content || "No data available for this section.";
+        metaBox.innerHTML = content || "No data available for this section.";
       }
     }
     // ── Developer Modal ─────────────────────────────────────────────
