@@ -430,8 +430,6 @@
       </div>
     </div>
   </section>
-
-  <!-- Dev Modal -->
   <div id="dev-modal-overlay" onclick="closeDevModal()" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:1000;"></div>
   <div id="dev-modal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); z-index:1001; background:#080808; border:1px solid #f0c040; padding:36px 40px; width:min(680px,95vw); max-height:85vh; overflow-y:auto; box-sizing:border-box;">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
@@ -469,7 +467,6 @@
     </div>
 
     <div class="guide-container">
-      <!-- Sidebar Desktop -->
       <div id="standard-sidebar" class="sidebar-dots">
         <div class="tab-item active" data-id="Focuses" onclick="setTab('Focuses')">
           <div class="tab-dot"></div><span class="tab-label">Focus Tree</span>
@@ -495,7 +492,6 @@
       </div>
 
       <div class="content-box">
-        <!-- Mini Tabs for easy mobile access or quick switching -->
         <div class="mini-tabs">
           <div class="mini-tab active" data-id="Focuses" onclick="setTab('Focuses')">Focus</div>
           <div class="mini-tab" data-id="Research" onclick="setTab('Research')">Research</div>
@@ -641,15 +637,15 @@
 <li>20 factories on Infantry Equipment, 50 on Heavy Tanks (prioritize Infantry over Tanks)</li>
 <li>Once Armored Trains is researched: add 1 factory and move it to the top</li>
 </ul>
-<span class="section-head">Early 1939</span>
-<ul>
-<li>Start researching Flame Tanks</li>
-</ul>
 <span class="section-head">Mid-1938</span>
 <ul>
 <li>Add 1 factory on Inter-War Medium Tanks (convert later to Flame Tanks — see screenshots for the correct design)</li>
 <li>If you have surplus factories: increase Heavy Tanks to 100 factories</li>
 <li>Once Mechanized Equipment is researched: add 25 factories and prioritize it</li>
+</ul>
+<span class="section-head">Early 1939</span>
+<ul>
+<li>Start researching Flame Tanks</li>
 </ul>
 <span class="section-head">~Mid 1940</span>
 <ul>
@@ -1019,7 +1015,6 @@
       return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     }
   </script>
-  <!-- Lightbox -->
   <div id="lightbox" onclick="closeLightbox()">
     <span id="lightbox-close" onclick="closeLightbox()">&times;</span>
     <img id="lightbox-img" src="" alt="" onclick="event.stopPropagation()" />
