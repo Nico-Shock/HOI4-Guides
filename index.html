@@ -389,12 +389,12 @@
         <span style="font-size: 0.7em; font-family: 'JetBrains Mono', monospace; color: #444;">COMING SOON</span>
       </div>
 
-      <div class="country-card" style="border-color:#2a2200; background:#080600;" onclick="openDevModal()">
+      <div class="country-card disabled" style="border-color:#1a1a00; filter: grayscale(1);">
         <div>
-          <h3 style="color:#f0c040;">⚠ DEV</h3>
-          <p style="color:#555;">Only for Developers — view and edit the missing items list.</p>
+          <h3 style="color:#444;">⚠ DEV</h3>
+          <p style="color:#333;">Only for Developers — view and edit the missing items list.</p>
         </div>
-        <span style="font-size:0.7em; font-family:'JetBrains Mono',monospace; color:#f0c040;">OPEN</span>
+        <span style="font-size:0.7em; font-family:'JetBrains Mono',monospace; color:#333;">DISABLED</span>
       </div>
     </div>
   </section>
@@ -421,7 +421,7 @@
     
     <div class="top-nav-row">
       <div class="info-badge">
-        STRATEGY UNTIL: 01. JAN 1941
+        STRATEGY UNTIL: 01. FEB 1941
       </div>
 
       <div style="display:flex; align-items:center; gap:10px;">
@@ -581,10 +581,10 @@
 <li>Logistics Company 2 <span class="tip">[use Mytishchy Machine Building]</span></li>
 <li>Signal Company 2 <span class="tip">[use MIO]</span></li>
 <li>Field Hospital 2 <span class="tip">[use Mytishchy Machine Building]</span></li>
-<li>Computing Machine <span class="tip">[use MIO]</span></li>
 <li>Weapons Upgrade 2 <span class="tip">[use MIO]</span></li>
-<li>Weapons Upgrade 3 <span class="tip">[use MIO]</span></li>
 <li>Improved Infantry 2 <span class="tip">[use MIO]</span></li>
+<li>Armored Engineer Company <span class="tip">[use MIO]</span></li>
+<li>Advanced Flamethrower <span class="tip">[use Mytishchy Machine Building]</span></li>
 </ol>`,
 
         "Production": `<span class="section-head">At Game Start</span>
@@ -609,16 +609,31 @@
 <li>20 factories on Infantry Equipment, 50 on Heavy Tanks (prioritize Infantry over Tanks)</li>
 <li>Once Armored Trains is researched: add 1 factory and move it to the top</li>
 </ul>
+<span class="section-head">Early 1938</span>
+<ul>
+<li>Start researching Flame Tanks</li>
+</ul>
 <span class="section-head">Mid-1938</span>
 <ul>
 <li>Add 1 factory on Inter-War Medium Tanks (convert later to Flame Tanks — see screenshots for the correct design)</li>
 <li>If you have surplus factories: increase Heavy Tanks to 100 factories</li>
 <li>Once Mechanized Equipment is researched: add 25 factories and prioritize it</li>
 </ul>
+<span class="section-head">~October 1940</span>
+<ul>
+<li>Now start creating the best heavy tank template and start converting it as shown in the screenshot</li>
+<li><span class="tip">Note: Create a normal heavy design as shown in the screenshots, then edit this template and create a Tank Destroyer template out of it. After you did that, replace your heavy tank production line with the normal designed heavy tank, then instantly replace it with the heavy tank destroyer variant.</span></li>
+</ul>
+<span class="section-head">~1941</span>
+<ul>
+<li>When you have finished researching Armored Engineer Company, put 5 factories on it and prioritize it</li>
+</ul>
 <span class="section-head">Notes</span>
 <ul>
 <li>Create and upgrade tank templates as shown in the named screenshots</li>
 <li>Make sure to always convert your new equipment</li>
+<li>The army shown in the screenshot: 296 divisions are the normal infantry template, 56 are the tank templates, and 24 are the AA templates</li>
+<li>Create the tank design from the template — you can change it to a more offensive one by removing one Mechanized and adding one Tank Destroyer from the screenshot. The trick is to create the template, duplicate it, then uncheck every single equipment and convert your tank divisions to the one without equipment, then convert it to the real tank template. Make sure to change it to Armored Engineer later and convert it with the same trick.</li>
 </ul>`,
 
         "PP Picks": `<ol>
@@ -688,6 +703,7 @@
 <li>Complete building a Land Warfare Research Facility by the start of 1939</li>
 <li>~October 1939: Begin training 300+ basic Infantry divisions — use the template shown in the screenshots</li>
 <li>If you run low on Infantry Equipment, increase Military Factory allocation to 25–30</li>
+<li>If you forgot it earlier: the absolute latest point to start is when Military Reorganization is completed — convert all your tank division templates to tanks</li>
 </ol>`
       }
     };
@@ -724,7 +740,9 @@
         { label: "Flame Tank 2",                    file: "tank/flame tank (2).png" },
         { label: "Light Recon 1 (1937)",            file: "tank/light recon 1 (1937).png" },
         { label: "Light Recon 2 (after Flame Tank)",file: "tank/light recon 2 (after flame tank).png" },
-        { label: "1934 Heavy Tank with OKMO",       file: "tank/1934 heavy tank with okmo.png" }
+        { label: "1934 Heavy Tank with OKMO",       file: "tank/1934 heavy tank with okmo.png" },
+        { label: "Heavy Tank 2",                    file: "tank/heavy tank 2.png" },
+        { label: "Heavy Tank 3",                    file: "tank/heavy tank 3.png" }
       ],
       production: [
         { label: "AA Trick Template",  file: "production/aa trick template.png" },
@@ -732,7 +750,10 @@
         { label: "15 Sep 1937",        file: "production/15 sep 1937.png" },
         { label: "May 1938",           file: "production/may 1938.png" },
         { label: "Mai 1940",           file: "production/mai 1940.png" },
-        { label: "1 Jan",              file: "production/1 jan.png" }
+        { label: "1 Jan",              file: "production/1 jan.png" },
+        { label: "Army Example",         file: "production/army shown.png" },
+        { label: "Final Tank",         file: "production/final tank.png" },
+        { label: "Okt 1940",           file: "production/okt 1940.png" }
       ]
     };
 
