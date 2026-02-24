@@ -300,6 +300,38 @@
       color: #333 !important;
     }
     .cb-done .tip { color: #2a2a2a !important; }
+    /* Lightbox */
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.92);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-out;
+    }
+    #lightbox.open { display: flex; }
+    #lightbox img {
+      max-width: 92vw;
+      max-height: 92vh;
+      object-fit: contain;
+      box-shadow: 0 0 60px rgba(0,0,0,0.8);
+    }
+    #lightbox-close {
+      position: fixed;
+      top: 20px;
+      right: 28px;
+      color: #666;
+      font-size: 2em;
+      cursor: pointer;
+      font-family: 'JetBrains Mono', monospace;
+      line-height: 1;
+      z-index: 2001;
+    }
+    #lightbox-close:hover { color: #fff; }
+    .lib-img-wrap img { cursor: zoom-in; }
+
     .lib-categories {
       display: flex;
       gap: 8px;
@@ -797,6 +829,23 @@
       const img = document.getElementById('lib-img');
       img.src = `${GITHUB_RAW}${REPO}/${f.file.replace(/ /g, '%20')}`;
       img.alt = f.label;
+      img.onclick = () => openLightbox(img.src);
+    }
+
+    function openLightbox(src) {
+      const lb = document.getElementById('lightbox');
+      document.getElementById('lightbox-img').src = src;
+      lb.classList.add('open');
+      document.addEventListener('keydown', lbKeyHandler);
+    }
+
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('open');
+      document.removeEventListener('keydown', lbKeyHandler);
+    }
+
+    function lbKeyHandler(e) {
+      if (e.key === 'Escape') closeLightbox();
     }
 
     function toggleLibrary() {
@@ -969,5 +1018,11 @@
       return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     }
   </script>
+  <!-- Lightbox -->
+  <div id="lightbox" onclick="closeLightbox()">
+    <span id="lightbox-close" onclick="closeLightbox()">&times;</span>
+    <img id="lightbox-img" src="" alt="" onclick="event.stopPropagation()" />
+  </div>
+
 </body>
 </html>
