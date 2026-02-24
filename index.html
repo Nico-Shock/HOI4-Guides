@@ -795,7 +795,7 @@
       const files = screenshotLibrary[currentLibCat];
       const f = files[currentLibFile];
       const img = document.getElementById('lib-img');
-      img.src = `${GITHUB_RAW}${REPO}/${f.file}`;
+      img.src = `${GITHUB_RAW}${REPO}/${f.file.replace(/ /g, '%20')}`;
       img.alt = f.label;
     }
 
